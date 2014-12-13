@@ -68,6 +68,15 @@ describe('Bowling Game', function() {
 			expect(game.score).toBe(13);
 		});
 
+		it('will add the score of the next two rolls if the player scores a strike', function() {
+			frame1.roll1(10);
+			game.addFrame(frame1);
+			frame2.roll1(3);
+			frame2.roll2(6);
+			game.addFrame(frame2);
+			expect(game.score).toBe(28)
+		});
+
 	});
 
 });
