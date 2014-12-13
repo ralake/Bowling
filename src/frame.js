@@ -1,5 +1,8 @@
 function Frame() {
-	this.pinsHit = null
+	this.pinsHit = null;
+	this.roll1Score = null;
+	this.roll2Score = null;
+	this.bonus = null;
 };
 
 Frame.prototype.roll1 = function(pinsHit) {

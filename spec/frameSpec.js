@@ -8,6 +8,12 @@ describe('Frames', function() {
 
 	describe('scores...', function() {
 
+		it('has no score before rolls are recorded', function() {
+			expect(frame.roll1Score).toBe(null);
+			expect(frame.roll2Score).toBe(null);
+			expect(frame.pinsHit).toBe(null);
+		});
+
 		it('should record the score of a roll', function() {
 			frame.roll1(5);
 			expect(frame.roll1Score).toBe(5);
