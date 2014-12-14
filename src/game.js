@@ -3,10 +3,11 @@ function Game() {
 	this.score = 0;
 }
 
-Game.prototype.setupFrames = function(frame) {
-	for(var i = 0; i < 10; i++) {
+Game.prototype.setupFrames = function(frame, frameTen) {
+	for(var i = 0; i < 9; i++) {
 		this.frames.push(new frame);
 	}
+	this.frames.push(frameTen);
 };
 
 Game.prototype.calculateScore = function() {
@@ -16,6 +17,14 @@ Game.prototype.calculateScore = function() {
 		this.score += (this.frames[i].pinsHit + this.frames[i].bonus);
 	}
 	return this.score;
+};
+
+Game.prototype.gutterGame = function() {
+	return (this.score === 0 && this.frames[9].roll2Score === 0)
+};
+
+Game.prototype.perfectGame = function() {
+	return (this.score === 300)
 };
 
 Game.prototype._spareBonus = function(frame) {
@@ -35,11 +44,21 @@ Game.prototype._strikeBonus = function(frame) {
 };
 
 Game.prototype._firstRollBonus = function(frame) {
+	if (frame === this.frames[9]) {
+		return null;
+	}
+	else {
 	return this._nextFrame(frame).roll1Score;
+}
 };
 
 Game.prototype._secondRollBonus = function(frame) {
+	if (frame === this.frames[9]) {
+		return null;
+	}
+	else {
 	return this._nextFrame(frame).roll2Score || this._secondNextFrame(frame).roll1Score;
+	}
 };
 
 Game.prototype._nextFrame = function(frame) {

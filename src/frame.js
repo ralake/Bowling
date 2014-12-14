@@ -25,7 +25,7 @@ Frame.prototype.isStrike = function() {
 };
 
 Frame.prototype._illegalRoll = function(pinsHit) {
-	if (pinsHit > 10 || (this.pinsHit + pinsHit > 10)) {
+	if (pinsHit > 10 || (this.pinsHit + pinsHit > 10) || this.isStrike()) {
 		throw Error("There are only ten pins");
 	}
 	else {

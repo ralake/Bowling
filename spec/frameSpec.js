@@ -26,12 +26,17 @@ describe('Frames', function() {
 		});
 
 		it('should not be able to record more than 10 pins being knocked down in a single roll', function() {
-			expect( function(){ frame.roll1(12); } ).toThrow(new Error("There are only ten pins"));
+			expect( function(){ frame.roll1(12); }).toThrow(new Error("There are only ten pins"));
 		});
 
 		it('should never have more than ten pins hit per frame', function() {
 			frame.roll1(6);
-			expect( function(){ frame.roll2(8); } ).toThrow(new Error("There are only ten pins"));
+			expect( function(){ frame.roll2(8); }).toThrow(new Error("There are only ten pins"));
+		});
+
+		it('makes second roll unavailable if a strike is scored on the first roll', function() {
+			frame.roll1(10);
+			expect( function(){ frame.roll2(1); }).toThrow(new Error("There are only ten pins"));
 		});
 
 	});

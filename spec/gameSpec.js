@@ -1,10 +1,12 @@
 describe('Bowling Game', function() {
 
 	var game;
+	var frameTen;
 
 	beforeEach(function() {
 		game = new Game();
-		game.setupFrames(Frame);
+		frameTen = new FrameTen();
+		game.setupFrames(Frame, frameTen);
 	});
 
 	describe('Frames...', function() {
@@ -23,14 +25,6 @@ describe('Bowling Game', function() {
 
 		it('has a score of zero at the start of the game', function() {
 			expect(game.calculateScore()).toBe(0)
-		});
-
-		it('has a total score of zero if a gutter game is rolled', function() {
-			for(var i = 0; i < 10; i++) {
-				game.frames[i].roll1(0);
-				game.frames[i].roll2(0);
-			}
-			expect(game.calculateScore()).toBe(0);
 		});
 
 		it('adds the score of the frame to the total when the frame is added', function() {
@@ -67,6 +61,17 @@ describe('Bowling Game', function() {
 			expect(game.calculateScore()).toBe(10);
 		});
 
+		it('adds the score of the third roll if the player scores a spare in the tenth frame', function() {
+			for(var i = 0; i < 9; i++) {
+				game.frames[i].roll1(0);
+				game.frames[i].roll2(0);
+			}
+			game.frames[9].roll1(5);
+			game.frames[9].roll2(5);
+			game.frames[9].roll3(1);
+			expect(game.calculateScore()).toBe(11)
+		});
+
 	});
 
 	describe('Strikes...', function() {
@@ -91,6 +96,39 @@ describe('Bowling Game', function() {
 			game.frames[1].roll1(10);
 			game.frames[2].roll1(10);
 			expect(game.calculateScore()).toBe(60);
+		});
+
+		it('adds the score of the two following rolls if the player gets a strike on roll one of frame 10', function() {
+			for(var i = 0; i < 9; i++) {
+				game.frames[i].roll1(0);
+				game.frames[i].roll2(0);
+			}
+			game.frames[9].roll1(10);
+			game.frames[9].roll2(10);
+			game.frames[9].roll3(10);
+			expect(game.calculateScore()).toBe(30)
+		});
+
+	});
+
+	describe('Gutter Games and Perfect Games', function() {
+		
+		it('knows if it is a gutter game', function() {
+			for(var i = 0; i < 10; i++) {
+				game.frames[i].roll1(0);
+				game.frames[i].roll2(0);
+			}
+			expect(game.gutterGame()).toBe(true);
+		});
+
+		it('knows if it is a perfect game', function() {
+			for(var i = 0; i < 10; i++) {
+				game.frames[i].roll1(10);
+			}
+			game.frames[9].roll2(10);
+			game.frames[9].roll3(10);
+			game.calculateScore();
+			expect(game.perfectGame()).toBe(true);
 		});
 
 	});
