@@ -1,50 +1,43 @@
 function Game() {
 	this.frames = [];
-	this.score = 0;
 }
 
-Game.prototype.addFrame = function(frame) {
-	if (this.frames.length === 10) {
-		throw Error("There are already ten frames");
-	}
-	else {
-	this.frames.push(frame);
-	this._calculateBonus(frame);
-	this._calculateTotalScore();
+Game.prototype.setupFrames = function(frame) {
+	for(var i = 0; i < 10; i++) {
+		this.frames.push(new frame);
 	}
 };
 
+Game.prototype.calculateScore = function() {
+	this.score = 0;
+	for(var i = 0; i < 10; i++) {
+		this._spareBonus(this.frames[i]);
+		this._strikeBonus(this.frames[i]);
+		this.score += (this.frames[i].pinsHit + this.frames[i].bonus);
+	}
+	return this.score;
+};
+
 Game.prototype._spareBonus = function(frame) {
-	var previousFrame = this.frames[this.frames.indexOf(frame) - 1];
-	if (previousFrame.isSpare()) {
-		previousFrame.bonus += frame.roll1Score;
+	if (frame.isSpare()) {
+		frame.bonus += this._firstRollBonus(frame);
 	}
 	else {
 	}
 };
 
 Game.prototype._strikeBonus = function(frame) {
-	var previousFrame = this.frames[this.frames.indexOf(frame) - 1];
-	if (previousFrame.isStrike()) {
-		previousFrame.bonus += frame.pinsHit;
-	}
-	else {
+	if (frame.isStrike()) {
+		frame.bonus += (this._firstRollBonus(frame) + this._secondRollBonus(frame))
 	}
 };
 
-Game.prototype._calculateBonus = function(frame) {
-	if (this.frames.length === 2) {
-		this._spareBonus(frame);
-		this._strikeBonus(frame);
-	}
-	else {
-	}
+Game.prototype._firstRollBonus = function(frame) {
+	return this.frames[this.frames.indexOf(frame) + 1].roll1Score;
 };
 
-Game.prototype._calculateTotalScore = function() {
-	var score = 0;
-	this.frames.forEach(function(frame) {
-		score += (frame.pinsHit + frame.bonus);
-	});
-	this.score = score;
+Game.prototype._secondRollBonus = function(frame) {
+	return this.frames[this.frames.indexOf(frame) + 1].roll2Score || this.frames[this.frames.indexOf(frame) + 2].roll1Score;
 };
+
+

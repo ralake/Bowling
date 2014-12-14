@@ -1,32 +1,20 @@
 describe('Bowling Game', function() {
 
 	var game;
-	var frame1;
-	var frame2;
 
 	beforeEach(function() {
 		game = new Game();
-		frame1 = new Frame();
-		frame2 = new Frame();
+		game.setupFrames(Frame);
 	});
 
 	describe('Frames...', function() {
 
-		it('has no frames at the start of the game', function(){
-			expect(game.frames).toEqual([])
+		it('has 10 frames at the start of the game', function(){
+			expect(game.frames.length).toBe(10);
 		});
 
-		it('can have a frame added to it', function() {
-			game.addFrame(frame1);
-			expect(game.frames.length).toBe(1);
-		});
-
-		it('can have no more than ten frames', function() {
-			for(var i = 0; i < 10; i++) {
-				game.addFrame(new Frame);
-			};
-			expect(game.frames.length).toBe(10)
-			expect( function(){ game.addFrame(frame1); } ).toThrow(new Error("There are already ten frames"));
+		it('has ten frames', function() {
+			expect(game.frames.length).toBe(10);
 		});
 
 	});
@@ -34,47 +22,75 @@ describe('Bowling Game', function() {
 	describe('Basic Scores...', function() {
 
 		it('has a score of zero at the start of the game', function() {
-			expect(game.score).toBe(0)
+			expect(game.calculateScore()).toBe(0)
+		});
+
+		it('has a total score of zero if a gutter game is rolled', function() {
+			for(var i = 0; i < 10; i++) {
+				game.frames[i].roll1(0);
+				game.frames[i].roll2(0);
+			}
+			expect(game.calculateScore()).toBe(0);
 		});
 
 		it('adds the score of the frame to the total when the frame is added', function() {
-			frame1.roll1(2);
-			frame1.roll2(4);
-			game.addFrame(frame1)
-			expect(game.score).toBe(6);
+			game.frames[0].roll1(2);
+			game.frames[0].roll2(4);
+			expect(game.calculateScore()).toBe(6);
 		});
 
 		it('keeps a running total', function() {
-			frame1.roll1(2);
-			frame1.roll2(4);
-			frame2.roll1(5);
-			frame2.roll2(3);
-			game.addFrame(frame1)
-			game.addFrame(frame2)
-			expect(game.score).toBe(14);
+			game.frames[0].roll1(2);
+			game.frames[0].roll2(4);
+			game.frames[1].roll1(5);
+			game.frames[1].roll2(3);
+			expect(game.calculateScore()).toBe(14);
 		});
 
 	});
 
-	describe('Bonus Scores...', function() {
+	describe('Spares...', function() {
 
 		it('will add the score of the first roll of the next frame if a player score a spare', function() {
-			frame1.roll1(6);
-			frame1.roll2(4);
-			game.addFrame(frame1)
-			frame2.roll1(1);
-			frame2.roll2(1);
-			game.addFrame(frame2)
-			expect(game.score).toBe(13);
+			game.frames[0].roll1(6);
+			game.frames[0].roll2(4);
+			game.frames[1].roll1(1);
+			game.frames[1].roll2(1);
+			expect(game.calculateScore()).toBe(13)
 		});
 
-		it('will add the score of the next two rolls if the player scores a strike', function() {
-			frame1.roll1(10);
-			game.addFrame(frame1);
-			frame2.roll1(3);
-			frame2.roll2(6);
-			game.addFrame(frame2);
-			expect(game.score).toBe(28)
+		it('will will not add a bonus if a player score a spare and follows with a gutter roll', function() {
+			game.frames[0].roll1(6);
+			game.frames[0].roll2(4);
+			game.frames[1].roll1(0);
+			game.frames[1].roll2(0);
+			expect(game.calculateScore()).toBe(10);
+		});
+
+	});
+
+	describe('Strikes...', function() {
+
+		it('will add the score of the next two rolls if the player scores a strike and follows with standard rolls', function() {
+			game.frames[0].roll1(10);
+			game.frames[1].roll1(3);
+			game.frames[1].roll2(6);
+			expect(game.calculateScore()).toBe(28);
+		});
+
+		it('will add the score of the next two rolls if the player scores a strike and follows with another strike', function() {
+			game.frames[0].roll1(10);
+			game.frames[1].roll1(10);
+			game.frames[2].roll1(6);
+			game.frames[2].roll2(2);
+			expect(game.calculateScore()).toBe(52);
+		});
+
+		it('will calculate the correct bonus if the player scores three strikes in a row', function() {
+			game.frames[0].roll1(10);
+			game.frames[1].roll1(10);
+			game.frames[2].roll1(10);
+			expect(game.calculateScore()).toBe(60);
 		});
 
 	});
