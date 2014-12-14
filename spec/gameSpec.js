@@ -111,7 +111,7 @@ describe('Bowling Game', function() {
 
 	});
 
-	describe('Gutter Games and Perfect Games', function() {
+	describe('Gutter Games and Perfect Games...', function() {
 		
 		it('knows if it is a gutter game', function() {
 			for(var i = 0; i < 10; i++) {
