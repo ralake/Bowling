@@ -1,5 +1,6 @@
 function Game() {
 	this.frames = [];
+	this.score = 0;
 }
 
 Game.prototype.setupFrames = function(frame) {
@@ -9,7 +10,6 @@ Game.prototype.setupFrames = function(frame) {
 };
 
 Game.prototype.calculateScore = function() {
-	this.score = 0;
 	for(var i = 0; i < 10; i++) {
 		this._spareBonus(this.frames[i]);
 		this._strikeBonus(this.frames[i]);
@@ -30,14 +30,23 @@ Game.prototype._strikeBonus = function(frame) {
 	if (frame.isStrike()) {
 		frame.bonus += (this._firstRollBonus(frame) + this._secondRollBonus(frame))
 	}
+	else {
+	}
 };
 
 Game.prototype._firstRollBonus = function(frame) {
-	return this.frames[this.frames.indexOf(frame) + 1].roll1Score;
+	return this._nextFrame(frame).roll1Score;
 };
 
 Game.prototype._secondRollBonus = function(frame) {
-	return this.frames[this.frames.indexOf(frame) + 1].roll2Score || this.frames[this.frames.indexOf(frame) + 2].roll1Score;
+	return this._nextFrame(frame).roll2Score || this._secondNextFrame(frame).roll1Score;
 };
 
+Game.prototype._nextFrame = function(frame) {
+	return this.frames[this.frames.indexOf(frame) + 1]
+};
+
+Game.prototype._secondNextFrame = function(frame) {
+	return this.frames[this.frames.indexOf(frame) + 2]
+};
 
