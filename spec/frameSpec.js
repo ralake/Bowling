@@ -80,10 +80,6 @@ describe('Frames', function() {
 
 	describe('Frame Ten...', function() {
 
-		it('knows that it is frame ten', function() {
-			expect(frame10.frameNumber).toBe(10);
-		});
-
 		it('is not allowed a third roll if the player does not score and spare or strike', function() {
 			frame10.roll1(1);
 			frame10.roll2(2);

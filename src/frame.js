@@ -20,7 +20,7 @@ Frame.prototype.roll2 = function(pinsHit) {
 };
 
 Frame.prototype.roll3 = function(pinsHit) {
-	if (this.frameNumber === 10 && this.pinsHit < 10 || this.frameNumber !== 10) {
+	if (this.frameNumber !== 10 || this.frameNumber === 10 && this.pinsHit < 10) {
 		throw Error("You are not allowed a third roll")
 	}
 	this.roll3Score = pinsHit;
@@ -39,7 +39,7 @@ Frame.prototype._updateScore = function(pinsHit) {
 };
 
 Frame.prototype._illegalRoll = function(pinsHit) {
-	if (pinsHit > 10 || (this.pinsHit + pinsHit > 10 && this.frameNumber !== 10) || this.frameNumber !== 10 && this.isStrike()) {
+	if (pinsHit > 10 || (this.frameNumber !== 10 && (this.isStrike() || this.pinsHit + pinsHit > 10))) {
 		throw Error("There are only ten pins");
 	}
 	else {
