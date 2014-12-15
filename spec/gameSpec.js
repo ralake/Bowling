@@ -1,12 +1,10 @@
 describe('Bowling Game', function() {
 
 	var game;
-	var frameTen;
 
 	beforeEach(function() {
 		game = new Game();
-		frameTen = new FrameTen();
-		game.setupFrames(Frame, frameTen);
+		game.setupFrames(Frame);
 	});
 
 	describe('Frames...', function() {

@@ -3,11 +3,10 @@ function Game() {
 	this.score = 0;
 }
 
-Game.prototype.setupFrames = function(frame, frameTen) {
-	for(var i = 0; i < 9; i++) {
-		this.frames.push(new frame);
+Game.prototype.setupFrames = function(frame) {
+	for(var i = 0; i < 10; i++) {
+		this.frames.push(new frame(i+1))
 	}
-	this.frames.push(frameTen);
 };
 
 Game.prototype.calculateScore = function() {
