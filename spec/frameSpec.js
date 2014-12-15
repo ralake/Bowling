@@ -11,7 +11,7 @@ describe('Frames', function() {
 	describe('identifiers', function() {
 
 		it('knows its number', function() {
-			expect(frame.frameNumber).toBe(1);
+			expect(frame.stats.number).toBe(1);
 		});
 
 	});
@@ -19,20 +19,20 @@ describe('Frames', function() {
 	describe('scores...', function() {
 
 		it('has no score before rolls are recorded', function() {
-			expect(frame.roll1Score).toBe(null);
-			expect(frame.roll2Score).toBe(null);
-			expect(frame.pinsHit).toBe(null);
+			expect(frame.stats.roll1Score).toBe(null);
+			expect(frame.stats.roll2Score).toBe(null);
+			expect(frame.stats.pinsHit).toBe(null);
 		});
 
 		it('should record the score of a roll', function() {
 			frame.roll1(5);
-			expect(frame.roll1Score).toBe(5);
+			expect(frame.stats.roll1Score).toBe(5);
 		});
 
 		it('should know the score of both rolls', function() {
 			frame.roll1(5);
 			frame.roll2(3);
-			expect(frame.pinsHit).toBe(8);
+			expect(frame.stats.pinsHit).toBe(8);
 		});
 
 		it('should not be able to record more than 10 pins being knocked down in a single roll', function() {
@@ -90,14 +90,14 @@ describe('Frames', function() {
 			frame10.roll1(4);
 			frame10.roll2(6);
 			frame10.roll3(2);
-			expect(frame10.pinsHit).toBe(12)
+			expect(frame10.stats.pinsHit).toBe(12)
 		});
 
 		it('allows a third roll if the player scores a strike', function() {
 			frame10.roll1(10);
 			frame10.roll2(10);
 			frame10.roll3(10);
-			expect(frame10.pinsHit).toBe(30)
+			expect(frame10.stats.pinsHit).toBe(30)
 		});
 
 	});

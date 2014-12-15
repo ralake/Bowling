@@ -17,7 +17,7 @@ Game.prototype.calculateScore = function() {
 };
 
 Game.prototype.gutterGame = function() {
-	return (this.score === 0 && this.frames[9].roll2Score === 0)
+	return (this.score === 0 && this.frames[9].stats.roll2Score === 0)
 };
 
 Game.prototype.perfectGame = function() {
@@ -27,12 +27,12 @@ Game.prototype.perfectGame = function() {
 Game.prototype._totalize = function(num) {
 	this._spareBonus(this.frames[num]);
 	this._strikeBonus(this.frames[num]);
-	this.score += (this.frames[num].pinsHit + this.frames[num].bonus);
+	this.score += (this.frames[num].stats.pinsHit + this.frames[num].stats.bonus);
 };
 
 Game.prototype._spareBonus = function(frame) {
 	if (frame.isSpare()) {
-		frame.bonus += this._firstRollBonus(frame);
+		frame.stats.bonus += this._firstRollBonus(frame);
 	}
 	else {
 	}
@@ -40,27 +40,27 @@ Game.prototype._spareBonus = function(frame) {
 
 Game.prototype._strikeBonus = function(frame) {
 	if (frame.isStrike()) {
-		frame.bonus += (this._firstRollBonus(frame) + this._secondRollBonus(frame))
+		frame.stats.bonus += (this._firstRollBonus(frame) + this._secondRollBonus(frame))
 	}
 	else {
 	}
 };
 
 Game.prototype._firstRollBonus = function(frame) {
-	if (frame.frameNumber === 10) {
+	if (frame.stats.number === 10) {
 		return null;
 	}
 	else {
-		return this._nextFrame(frame).roll1Score;
+		return this._nextFrame(frame).stats.roll1Score;
 	}
 };
 
 Game.prototype._secondRollBonus = function(frame) {
-	if (frame.frameNumber === 10) {
+	if (frame.stats.number === 10) {
 		return null;
 	}
 	else {
-		return this._nextFrame(frame).roll2Score || this._secondNextFrame(frame).roll1Score;
+		return this._nextFrame(frame).stats.roll2Score || this._secondNextFrame(frame).stats.roll1Score;
 	}
 };
 

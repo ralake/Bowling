@@ -13,22 +13,12 @@ describe('Bowling Game', function() {
 			expect(game.frames.length).toBe(10);
 		});
 
-		it('has ten frames', function() {
-			expect(game.frames.length).toBe(10);
-		});
-
 	});
 
 	describe('Basic Scores...', function() {
 
 		it('has a score of zero at the start of the game', function() {
 			expect(game.calculateScore()).toBe(0)
-		});
-
-		it('adds the score of the frame to the total when the frame is added', function() {
-			game.frames[0].roll1(2);
-			game.frames[0].roll2(4);
-			expect(game.calculateScore()).toBe(6);
 		});
 
 		it('keeps a running total', function() {
@@ -116,6 +106,7 @@ describe('Bowling Game', function() {
 				game.frames[i].roll1(0);
 				game.frames[i].roll2(0);
 			}
+			game.calculateScore();
 			expect(game.gutterGame()).toBe(true);
 		});
 
