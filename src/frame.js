@@ -1,11 +1,11 @@
 function Frame(number) {
 	this.stats = {
 							  number: number,
-							 pinsHit: null,
-					  roll1Score: null,
-					  roll2Score: null,
-					  roll3Score: null,
-					 	     bonus: null
+							 	pinsHit: null,
+					  		roll1Score: null,
+					  		roll2Score: null,
+					  		roll3Score: null,
+					 	    bonus: null
 								}
 };
 
