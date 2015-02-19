@@ -34,15 +34,11 @@ Game.prototype._spareBonus = function(frame) {
   if (frame.isSpare()) {
     frame.stats.bonus += this._firstRollBonus(frame);
   }
-  else {
-  }
 };
 
 Game.prototype._strikeBonus = function(frame) {
   if (frame.isStrike()) {
     frame.stats.bonus += (this._firstRollBonus(frame) + this._secondRollBonus(frame))
-  }
-  else {
   }
 };
 
