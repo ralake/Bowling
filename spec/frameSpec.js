@@ -1,18 +1,18 @@
 describe('Frames', function() {
 
   var frame;
-	var frame10;
+  var frame10;
 
-	beforeEach(function() {		
-		frame = new Frame(1);
-		frame10 = new Frame(10);
-	});
+  beforeEach(function() {		
+    frame = new Frame(1);
+    frame10 = new Frame(10);
+  });
 
-	describe('identifiers', function() {
-		it('knows its number', function() {
-			expect(frame.stats.number).toBe(1);
-		});
-	});
+  describe('identifiers', function() {
+    it('knows its number', function() {
+      expect(frame.stats.number).toBe(1);
+    });
+  });
 
 	describe('scores...', function() {
 		it('has no score before rolls are recorded', function() {
