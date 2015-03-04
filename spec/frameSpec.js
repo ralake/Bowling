@@ -1,6 +1,6 @@
 describe('Frames', function() {
 
-	var frame;
+  var frame;
 	var frame10;
 
 	beforeEach(function() {		
