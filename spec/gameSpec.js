@@ -8,15 +8,12 @@ describe('Bowling Game', function() {
   });
 
   describe('Frames...', function() {
-
     it('has 10 frames at the start of the game', function(){
       expect(game.frames.length).toBe(10);
     });
-
   });
 
   describe('Basic Scores...', function() {
-
     it('has a score of zero at the start of the game', function() {
       expect(game.calculateScore()).toBe(0)
     });
@@ -28,11 +25,9 @@ describe('Bowling Game', function() {
       game.frames[1].roll2(3);
       expect(game.calculateScore()).toBe(14);
     });
-
   });
 
   describe('Spares...', function() {
-  	
     it('will add the score of the first roll of the next frame if a player score a spare', function() {
       game.frames[0].roll1(6);
       game.frames[0].roll2(4);
@@ -59,11 +54,9 @@ describe('Bowling Game', function() {
       game.frames[9].roll3(1);
       expect(game.calculateScore()).toBe(11)
     });
-
   });
 
   describe('Strikes...', function() {
-  	
     it('adds the next two rolls as a bonus if player scores a strike', function() {
       game.frames[0].roll1(10);
       game.frames[1].roll1(3);
@@ -96,11 +89,9 @@ describe('Bowling Game', function() {
       game.frames[9].roll3(10);
       expect(game.calculateScore()).toBe(30)
     });
-
   });
 
   describe('Gutter Games and Perfect Games...', function() {
-		
     it('knows if it is a gutter game', function() {
       for(var i = 0; i < 10; i++) {
         game.frames[i].roll1(0);
@@ -119,7 +110,6 @@ describe('Bowling Game', function() {
       game.calculateScore();
       expect(game.perfectGame()).toBe(true);
     });
-
   });
 
 });
