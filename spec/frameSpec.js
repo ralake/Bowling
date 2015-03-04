@@ -9,15 +9,12 @@ describe('Frames', function() {
 	});
 
 	describe('identifiers', function() {
-
 		it('knows its number', function() {
 			expect(frame.stats.number).toBe(1);
 		});
-
 	});
 
 	describe('scores...', function() {
-
 		it('has no score before rolls are recorded', function() {
 			expect(frame.stats.roll1Score).toBe(null);
 			expect(frame.stats.roll2Score).toBe(null);
@@ -48,11 +45,9 @@ describe('Frames', function() {
 			frame.roll1(10);
 			expect( function(){ frame.roll2(1); }).toThrow(new Error("There are only ten pins"));
 		});
-
 	});
 
 	describe('strikes and spares...', function() {
-
 		it('should know if it is a spare', function() {
 			frame.roll1(5);
 			frame.roll2(5);
@@ -75,11 +70,9 @@ describe('Frames', function() {
 			frame.roll2(2);
 			expect(frame.isStrike()).toBe(false);
 		});
-
 	});
 
 	describe('Frame Ten...', function() {
-
 		it('is not allowed a third roll if the player does not score and spare or strike', function() {
 			frame10.roll1(1);
 			frame10.roll2(2);
@@ -99,7 +92,6 @@ describe('Frames', function() {
 			frame10.roll3(10);
 			expect(frame10.stats.pinsHit).toBe(30)
 		});
-
 	});
 
 });
