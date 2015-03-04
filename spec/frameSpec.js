@@ -14,38 +14,38 @@ describe('Frames', function() {
     });
   });
 
-	describe('scores...', function() {
-		it('has no score before rolls are recorded', function() {
-			expect(frame.stats.roll1Score).toBe(null);
-			expect(frame.stats.roll2Score).toBe(null);
-			expect(frame.stats.pinsHit).toBe(null);
-		});
+  describe('scores...', function() {
+    it('has no score before rolls are recorded', function() {
+      expect(frame.stats.roll1Score).toBe(null);
+      expect(frame.stats.roll2Score).toBe(null);
+      expect(frame.stats.pinsHit).toBe(null);
+    });
 
-		it('should record the score of a roll', function() {
-			frame.roll1(5);
-			expect(frame.stats.roll1Score).toBe(5);
-		});
+    it('should record the score of a roll', function() {
+      frame.roll1(5);
+      expect(frame.stats.roll1Score).toBe(5);
+    });
 
-		it('should know the score of both rolls', function() {
-			frame.roll1(5);
-			frame.roll2(3);
-			expect(frame.stats.pinsHit).toBe(8);
-		});
+    it('should know the score of both rolls', function() {
+      frame.roll1(5);
+      frame.roll2(3);
+      expect(frame.stats.pinsHit).toBe(8);
+    });
 
-		it('should not be able to record more than 10 pins being knocked down in a single roll', function() {
-			expect( function(){ frame.roll1(12); }).toThrow(new Error("There are only ten pins"));
-		});
+    it('should not be able to record more than 10 pins being knocked down in a single roll', function() {
+      expect( function(){ frame.roll1(12); }).toThrow(new Error("There are only ten pins"));
+    });
 
-		it('should never have more than ten pins hit per frame (unless frame ten)', function() {
-			frame.roll1(6);
-			expect( function(){ frame.roll2(8); }).toThrow(new Error("There are only ten pins"));
-		});
+    it('should never have more than ten pins hit per frame (unless frame ten)', function() {
+      frame.roll1(6);
+      expect( function(){ frame.roll2(8); }).toThrow(new Error("There are only ten pins"));
+    });
 
-		it('makes second roll unavailable if a strike is scored on the first roll (unless frame ten)', function() {
-			frame.roll1(10);
-			expect( function(){ frame.roll2(1); }).toThrow(new Error("There are only ten pins"));
-		});
-	});
+    it('makes second roll unavailable if a strike is scored on the first roll (unless frame ten)', function() {
+      frame.roll1(10);
+      expect( function(){ frame.roll2(1); }).toThrow(new Error("There are only ten pins"));
+    });
+  });
 
 	describe('strikes and spares...', function() {
 		it('should know if it is a spare', function() {
