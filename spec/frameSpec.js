@@ -47,51 +47,51 @@ describe('Frames', function() {
     });
   });
 
-	describe('strikes and spares...', function() {
-		it('should know if it is a spare', function() {
-			frame.roll1(5);
-			frame.roll2(5);
-			expect(frame.isSpare()).toBe(true);
-		});
+  describe('strikes and spares...', function() {
+    it('should know if it is a spare', function() {
+      frame.roll1(5);
+      frame.roll2(5);
+      expect(frame.isSpare()).toBe(true);
+    });
 
-		it('should know if it is not a spare', function() {
-			frame.roll1(5);
-			frame.roll2(4);
-			expect(frame.isSpare()).toBe(false);
-		});
+    it('should know if it is not a spare', function() {
+      frame.roll1(5);
+      frame.roll2(4);
+      expect(frame.isSpare()).toBe(false);
+    });
 
-		it('should know if it is a strike', function() {
-			frame.roll1(10);
-			expect(frame.isStrike()).toBe(true);
-		});
+    it('should know if it is a strike', function() {
+      frame.roll1(10);
+      expect(frame.isStrike()).toBe(true);
+    });
 
-		it('should know if it is not a strike', function() {
-			frame.roll1(2);
-			frame.roll2(2);
-			expect(frame.isStrike()).toBe(false);
-		});
-	});
+    it('should know if it is not a strike', function() {
+      frame.roll1(2);
+      frame.roll2(2);
+      expect(frame.isStrike()).toBe(false);
+    });
+  });
 
-	describe('Frame Ten...', function() {
-		it('is not allowed a third roll if the player does not score and spare or strike', function() {
-			frame10.roll1(1);
-			frame10.roll2(2);
-			expect( function(){ frame10.roll3(1); }).toThrow(new Error("You are not allowed a third roll"));
-		});
+  describe('Frame Ten...', function() {
+    it('is not allowed a third roll if the player does not score and spare or strike', function() {
+      frame10.roll1(1);
+      frame10.roll2(2);
+      expect( function(){ frame10.roll3(1); }).toThrow(new Error("You are not allowed a third roll"));
+    });
 
-		it('allows a third roll if the player scores a spare', function() {
-			frame10.roll1(4);
-			frame10.roll2(6);
-			frame10.roll3(2);
-			expect(frame10.stats.pinsHit).toBe(12)
-		});
+    it('allows a third roll if the player scores a spare', function() {
+      frame10.roll1(4);
+      frame10.roll2(6);
+      frame10.roll3(2);
+      expect(frame10.stats.pinsHit).toBe(12)
+    });
 
-		it('allows a third roll if the player scores a strike', function() {
-			frame10.roll1(10);
-			frame10.roll2(10);
-			frame10.roll3(10);
-			expect(frame10.stats.pinsHit).toBe(30)
-		});
-	});
+    it('allows a third roll if the player scores a strike', function() {
+      frame10.roll1(10);
+      frame10.roll2(10);
+      frame10.roll3(10);
+      expect(frame10.stats.pinsHit).toBe(30)
+    });
+  });
 
 });
